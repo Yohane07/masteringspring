@@ -7,12 +7,27 @@ import com.springmastering.crud.repository.ProductRepository;
 
 import java.util.List;
 @Service
-public interface ProductService {
-    Product saveProduct(Product product);
+public class ProductService {
 
-    List<Product> fetchProductList();
+    private final ProductRepository repo;
 
-    Product updateProduct(Product product, Long productId);
+    public ProductService(ProductRepository repo) {
+        this.repo = repo;
+    }
 
-    void deleteProductById(Long productId);
+    public List<Product> getAll() {
+        return repo.findAll();
+    }
+
+    public Product getById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    public Product save(Product p) {
+        return repo.save(p);
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
 }
